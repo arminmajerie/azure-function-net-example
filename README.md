@@ -21,7 +21,7 @@ This repository contains an Azure Function App that utilizes HTTP triggers to in
 
 ## Build Requirements
 
-- [TargetFramework: net6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+- [TargetFramework: net8.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 - [Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local)
 - [Azure Storage Emulator or Azurite](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio) (for local testing)
 
@@ -29,8 +29,8 @@ This repository contains an Azure Function App that utilizes HTTP triggers to in
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/your-repo-name.git
-    cd your-repo-name
+    git clone https://github.com/arminmajerie/azure-function-net-example.git
+    cd azure-function-net-example
     ```
 
 2. **Install Azure Functions Core Tools**:

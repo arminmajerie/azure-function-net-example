@@ -1,0 +1,29 @@
+title Addproduct Http status 400
+participant Client
+participant AddProduct
+
+Client->AddProduct: POST /api/products\nwith Product JSON
+activate AddProduct
+AddProduct->AddProduct: Log "Processing AddProduct request."
+
+alt Invalid JSON
+    AddProduct->AddProduct: Read and deserialize request body
+    AddProduct->AddProduct: JsonException thrown
+    AddProduct->AddProduct: LogError "Invalid JSON in request body."
+    AddProduct->Client: HTTP 400 Bad Request\n{ error: "Invalid JSON in request body." }
+else Product is null
+    AddProduct->AddProduct: Read and deserialize request body
+    AddProduct->AddProduct: product == null
+    AddProduct->Client: HTTP 400 Bad Request\n{ error: "Product data is required." }
+else Product name is missing
+    AddProduct->AddProduct: Read and deserialize request body
+    AddProduct->AddProduct: Validate product data
+    AddProduct->AddProduct: product.Name is null or whitespace
+    AddProduct->Client: HTTP 400 Bad Request\n{ error: "Product name is required." }
+else Product price is invalid
+    AddProduct->AddProduct: Read and deserialize request body
+    AddProduct->AddProduct: Validate product data
+    AddProduct->AddProduct: product.Price <= 0
+    AddProduct->Client: HTTP 400 Bad Request\n{ error: "Product price must be greater than zero." }
+end
+deactivate AddProduct

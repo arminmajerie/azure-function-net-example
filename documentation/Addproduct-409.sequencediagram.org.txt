@@ -1,0 +1,21 @@
+title Addproduct Http status 409
+participant Client
+participant AddProduct
+participant ProductService
+participant AzureTableStorage
+
+Client->AddProduct: POST /api/products\nwith Product JSON
+activate AddProduct
+AddProduct->AddProduct: Log "Processing AddProduct request."
+AddProduct->AddProduct: Read and deserialize request body
+AddProduct->AddProduct: Validate product data
+AddProduct->ProductService: GetProductByIdAsync(product.Id)
+activate ProductService
+ProductService->AzureTableStorage: Retrieve product by Id
+activate AzureTableStorage
+AzureTableStorage-->ProductService: Returns existing product
+deactivate AzureTableStorage
+ProductService-->AddProduct: Product found
+deactivate ProductService
+AddProduct->Client: HTTP 409 Conflict\nProduct already exists
+deactivate AddProduct

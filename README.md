@@ -49,3 +49,18 @@ To clean and build the project, run the following commands:
 ```bash
 dotnet clean
 dotnet build
+```
+
+
+# Sequence Diagram
+## AddProduct http status 201
+![alt text](documentation\Addproduct-201.png)
+
+## AddProduct http status 409
+![alt text](documentation\Addproduct-409.png)
+
+## AddProduct http status 400
+![alt text](documentation\Addproduct-400.png)
+
+## GetProductById
+![alt text](documentation\GetProductById.png)

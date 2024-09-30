@@ -1,0 +1,31 @@
+title Addproduct Http status 201
+participant Client
+participant AddProduct
+participant ProductService
+participant AzureTableStorage
+
+Client->AddProduct: POST /api/products\nwith Product JSON
+activate AddProduct
+AddProduct->AddProduct: Log "Processing AddProduct request."
+AddProduct->AddProduct: Read and deserialize request body
+AddProduct->AddProduct: Validate product data
+note over AddProduct: If product.Id is null or empty,\ngenerate new product Id
+AddProduct->ProductService: GetProductByIdAsync(product.Id)
+activate ProductService
+ProductService->AzureTableStorage: Retrieve product by Id
+activate AzureTableStorage
+AzureTableStorage-->ProductService: Returns null (not found)
+deactivate AzureTableStorage
+ProductService-->AddProduct: Product not found
+deactivate ProductService
+AddProduct->ProductService: AddProductAsync(product)
+activate ProductService
+ProductService->AzureTableStorage: Insert new product
+activate AzureTableStorage
+AzureTableStorage-->ProductService: Confirm insertion
+deactivate AzureTableStorage
+ProductService-->AddProduct: Product added
+deactivate ProductService
+AddProduct->AddProduct: Log "Inserted productId: [product.Id]"
+AddProduct->Client: HTTP 201 Created\nwith product data
+deactivate AddProduct

@@ -1,0 +1,26 @@
+title GetProductById by id Http status 200
+participant Client
+participant GetProductById
+participant ProductService
+participant AzureTableStorage
+
+Client->GetProductById: GET /api/products/{id}
+activate GetProductById
+GetProductById->GetProductById: Log "Processing GetProductById request for Id: {id}"
+GetProductById->GetProductById: Validate Id
+alt Id is valid
+    GetProductById->ProductService: GetProductByIdAsync(id)
+    activate ProductService
+    ProductService->AzureTableStorage: Retrieve product by Id
+    activate AzureTableStorage
+    AzureTableStorage-->ProductService: Return product entity
+    deactivate AzureTableStorage
+    ProductService-->GetProductById: Return product
+    deactivate ProductService
+    GetProductById->Client: HTTP 200 OK\nwith product data
+else Id not found
+    GetProductById->Client: HTTP 404 Bad Request\n{"Product not found."}
+else Id is invalid
+    GetProductById->Client: HTTP 400 Bad Request\n{"Invalid product ID format."}\n{"Product ID is required."}
+end
+deactivate GetProductById

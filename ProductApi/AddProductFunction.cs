@@ -7,16 +7,17 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-
 using Advania.ProductApi.Models;
+using Advania.ProductApi.Functions;
 
 namespace Advania.ProductApi.Functions
 {
     public class AddProductFunction
     {
-        private readonly ProductService _productService;
+        private readonly IProductService _productService;
 
-        public AddProductFunction(ProductService productService)
+        // Use IProductService interface in the constructor
+        public AddProductFunction(IProductService productService)
         {
             _productService = productService;
         }
@@ -83,7 +84,7 @@ namespace Advania.ProductApi.Functions
 
             // Create the response
             string uri = $"{req.Scheme}://{req.Host}{req.Path}/{product.Id}";
-            log.LogInformation("inserted productId: " + product.Id);
+            log.LogInformation("Inserted productId: " + product.Id);
 
             return new CreatedResult(uri, product);
         }

@@ -56,14 +56,21 @@
 			"problemMatcher": "$msCompile"
 		},
 		{
-			"type": "func",
+			"label": "run functions",
+			"type": "shell",
+			"command": "func",
+			"args": [
+				"host",
+				"start"
+			],
+			"isBackground": true,
+			"problemMatcher": "$func-dotnet-watch",
 			"dependsOn": "build (functions)",
 			"options": {
-				"cwd": "${workspaceFolder}/bin/Debug/net8.0"
-			},
-			"command": "host start",
-			"isBackground": true,
-			"problemMatcher": "$func-dotnet-watch"
+				"cwd": "${workspaceFolder}"
+			}
 		}
+
+		
 	]
 }

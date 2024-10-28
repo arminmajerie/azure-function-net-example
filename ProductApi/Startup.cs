@@ -10,7 +10,7 @@ namespace Advania.ProductApi
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddSingleton<ProductService>();
+            builder.Services.AddSingleton<IProductService, ProductService>();
         }
     }
 }

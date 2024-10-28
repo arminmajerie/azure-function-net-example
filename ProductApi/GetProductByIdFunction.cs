@@ -12,9 +12,9 @@ namespace Advania.ProductApi.Functions
 {
     public class GetProductByIdFunction
     {
-        private readonly ProductService _productService;
+        private readonly IProductService _productService;
 
-        public GetProductByIdFunction(ProductService productService)
+        public GetProductByIdFunction(IProductService productService)
         {
             _productService = productService;
         }

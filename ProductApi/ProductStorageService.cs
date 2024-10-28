@@ -9,7 +9,7 @@ using Advania.ProductApi.Models;
 
 namespace Advania.ProductApi.Functions
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
         private readonly TableClient tableClient;
 

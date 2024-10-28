@@ -4,15 +4,14 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Advania.ProductApi.Models;
 
 namespace Advania.ProductApi.Functions
 {
     public class GetProductsFunction
     {
-        private readonly ProductService _productService;
+        private readonly IProductService _productService;
 
-        public GetProductsFunction(ProductService productService)
+        public GetProductsFunction(IProductService productService)
         {
             _productService = productService;
         }
@@ -25,7 +24,6 @@ namespace Advania.ProductApi.Functions
             log.LogInformation("Processing GetProducts request.");
 
             var products = await _productService.GetProductsAsync();
-
             return new OkObjectResult(products);
         }
     }
